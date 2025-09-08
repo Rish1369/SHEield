@@ -35,8 +35,8 @@ function handleAudioWS(ws) {
                 const analysisResults = await analyzeLatestAudio();
                 
                 // Log the full analysis response from Gemini
-                console.log('🔍 Gemini Analysis Results for latest audio:', JSON.stringify(analysisResults, null, 2));
-                console.log('📁 Latest file analyzed may be different from the just-saved file');
+                // console.log('🔍 Gemini Analysis Results for latest audio:', JSON.stringify(analysisResults, null, 2));
+                // console.log('📁 Latest file analyzed may be different from the just-saved file');
                 
                 // Send back the results to the client
                 ws.send(JSON.stringify({

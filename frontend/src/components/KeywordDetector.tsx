@@ -385,27 +385,19 @@ const KeywordDetector: React.FC<KeywordDetectorProps> = ({
           </div>
 
           <div className="space-y-2">
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="sensitivity">Sensitivity: {Math.round(settings.sensitivity * 100)}%</Label>
-              <input
-                id="sensitivity"
-                name="sensitivity" 
-                type="range"
-                min="0.1"
-                max="1.0"
-                step="0.1"
-                value={settings.sensitivity}
-                onChange={(e) => 
-                  setSettings(prev => ({ ...prev, sensitivity: parseFloat(e.target.value) }))
-                }
-                className="w-full"
-                title={`Sensitivity level: ${Math.round(settings.sensitivity * 100)}%`}
-                aria-describedby="sensitivity-description"
-              />
-              <p id="sensitivity-description" className="text-xs text-gray-500">
-                Adjust to control how sensitive the detection is to trigger phrases (higher = more sensitive)
-              </p>
-            </div>
+            <Label htmlFor="sensitivity">Sensitivity: {Math.round(settings.sensitivity * 100)}%</Label>
+            <input
+              id="sensitivity"
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value={settings.sensitivity}
+              onChange={(e) => 
+                setSettings(prev => ({ ...prev, sensitivity: parseFloat(e.target.value) }))
+              }
+              className="w-full"
+            />
           </div>
         </CardContent>
       </Card>

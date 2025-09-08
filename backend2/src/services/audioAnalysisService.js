@@ -28,6 +28,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 async function analyzeAudioContent(filePath) {
   try {
     console.log(`Analyzing audio file: ${filePath}`);
+    
     // Verify if the file exists
     if (!fs.existsSync(filePath)) {
       console.error(`File does not exist: ${filePath}`);

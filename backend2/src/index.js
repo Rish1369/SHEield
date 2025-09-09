@@ -7,10 +7,12 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 
-// --- Import all routers here ---
+// --- ✅ ALL ROUTERS MUST BE IMPORTED HERE AT THE TOP ---
 const contactsRouter = require('./routes/contacts');
-const alertsRouter = require('./routes/alerts'); 
+const alertsRouter = require('./routes/alerts');
+const placesRouter = require('./routes/places'); // This line was missing or in the wrong place
 const { handleAudioWS } = require('./controllers/audioWsController');
+// ---------------------------------------------------
 
 // MongoDB connection function
 async function connectDB() {
@@ -28,7 +30,7 @@ connectDB();
 const app = express();
 const PORT = config.server.port;
 
-// --- Configure CORS ---
+// Configure Middleware
 const corsOptions = {
   origin: '*', 
   methods: ["GET", "POST", "PUT", "DELETE"]
@@ -36,11 +38,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// --- Ensure uploads folder exists ---
+// Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, '../uploads');
 try {
-    // --- ✅ CORRECTED LINE ---
-    if (!fs.existsSync(uploadsDir)) { // Fixed the typo "uploadsD ir"
+    if (!fs.existsSync(uploadsDir)) {
         fs.mkdirSync(uploadsDir, { recursive: true });
         console.log('Uploads folder created:', uploadsDir);
     } else {
@@ -50,20 +51,21 @@ try {
     console.error('Error creating uploads folder:', err);
 }
 
-// --- Create HTTP and WebSocket servers ---
+// Create HTTP and WebSocket servers
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: '/audio' });
 
 wss.on('connection', handleAudioWS);
 
-// --- Mount all routers here ---
+// Mount all routers
 app.get('/', (req, res) => {
     res.send('Audio WebSocket server running');
 });
 app.use('/api/contacts', contactsRouter);
 app.use('/api/alerts', alertsRouter); 
+app.use('/api/places', placesRouter); // This line will now work correctly
 
-// --- Start the server ---
+// Start the server
 server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });

@@ -16,6 +16,7 @@ module.exports = {
   // API Keys from environment variables
   apiKeys: {
     gemini: process.env.GEMINI_API_KEY,
+    googleMaps: process.env.GOOGLE_MAPS_API_KEY,
   },
 
   // --- ✅ ADDED: Twilio Configuration ---
